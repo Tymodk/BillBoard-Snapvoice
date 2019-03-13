@@ -8,5 +8,9 @@ block content
 
   .row
     .offset-sm-2.col-sm-8
-      .jumbotron.text-center.
-        Welcome to your dashboard page, #{user.profile.firstName}.
+      .jumbotron.text-center
+        | Welcome to your dashboard page, #{user.profile.firstName}.  
+        br
+        | Your ID is #{user.id}. 
+        br
+        | You can use this to post to /scraper/#{user.id} to save your logs!
