@@ -8,6 +8,7 @@ var ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 const dashboardRouter = require("./routes/dashboard");         
 const publicRouter = require("./routes/public");
+const scraperRouter = require("./routes/scraper");
 const usersRouter = require("./routes/users");
 
 var app = express();
@@ -70,6 +71,7 @@ function loginRequired(req, res, next) {
 
 app.use('/', publicRouter);
 app.use('/dashboard', loginRequired, dashboardRouter);
+app.use('/scraper', scraperRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

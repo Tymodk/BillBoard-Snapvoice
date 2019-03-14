@@ -1,0 +1,21 @@
+extends layout
+
+block variables
+  - var title = "Scraper"
+
+block content
+    h2.text-center Scrapeboard
+    if user == undefined
+        .row
+            .offset-sm-2.col-sm-8
+                .jumbotron.text-center
+                    | To get more of this page, please log in.
+    else
+        .row
+            .offset-sm-2.col-sm-8
+                .jumbotron.text-center
+                    | This will be where you can see your saved scrape paths.
+                    br
+                    br
+                    br
+                    a.p-2(href="/scraper/generate", title="Home") Generate your token
