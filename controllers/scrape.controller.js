@@ -1,5 +1,5 @@
 const Code = require('../models/code.model');
-
+const Path = require('../models/path.model');
 
 function makeid(length) {
     var text = "";
@@ -16,7 +16,37 @@ exports.scrape = function (req, res) {
 };
 exports.post = function (req, res){
     console.log(req.params.id);
+    console.log(req.body);
+    Code.findOne({Code: req.params.id}, function (err, foundcode) {
+        if (err) console.log(err);
+        console.log(foundcode);
+        if(foundcode != null){
+            let path = new Path({
+                userID: foundcode.userID,
+                path: req.body, 
+            })
+            path.save(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            res.json({ succes: path});
+        } else {
+            res.json({ error: 'Not found'});
+        }
+    });
 };
+exports.paths = function (req, res) {
+    if(req.user === undefined){
+        res.render("unauthenticated");
+    }
+    else{
+        Path.find({userID: req.user.id}, function(err, paths) {
+            if (err) console.log(err);
+            res.json({success: paths})
+        });
+    }
+}
 exports.generate = function (req, res) {
     if(req.user === undefined){
         res.render("unauthenticated");
