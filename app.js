@@ -5,6 +5,11 @@ var logger = require('morgan');
 var session = require("express-session");
 var okta = require("@okta/okta-sdk-nodejs");
 var ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
+const bodyParser = require('body-parser');
+
+
+
+
 
 const dashboardRouter = require("./routes/dashboard");         
 const publicRouter = require("./routes/public");
@@ -12,6 +17,16 @@ const scraperRouter = require("./routes/scraper");
 const usersRouter = require("./routes/users");
 
 var app = express();
+
+const mongoose = require('mongoose');
+let dev_db_url = 'mongodb://localhost:27017/billboard';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
 var oktaClient = new okta.Client({
   orgUrl: 'https://dev-535937.okta.com',
   token: '00SL6tm9xCQuRXaFCTEjGwNcMqelFLJ-Y8VDSEH7fQ'
@@ -69,6 +84,8 @@ function loginRequired(req, res, next) {
   next();
 }
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', publicRouter);
 app.use('/dashboard', loginRequired, dashboardRouter);
 app.use('/scraper', scraperRouter);

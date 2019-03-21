@@ -11,6 +11,11 @@ block content
       .jumbotron.text-center
         | Welcome to your dashboard page, #{user.profile.firstName}.  
         br
-        | Your ID is #{user.id}. 
-        br
-        | You can use this to post to /scraper/#{user.id} to save your logs!
+        if code
+          | Your code is #{code}.
+          br
+          | You can use this to post to /scraper/#{code} to save your logs!
+          br 
+          
+        else
+          a(href="/scraper/generate") Generate your code

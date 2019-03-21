@@ -5,8 +5,8 @@ const scrape_controller = require('../controllers/scrape.controller.js');
 
 
 router.get('/', scrape_controller.scrape);
-router.get('/generate', scrape_controller.genereate);
-
+router.get('/generate', scrape_controller.generate);
+router.get('/:id', scrape_controller.post);
 module.exports = router;
 
 

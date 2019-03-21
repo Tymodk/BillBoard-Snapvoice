@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let CodeSchema = new Schema({
-    Code: {type: String, required: true, max: 100},
+let pathSchema = new Schema({
     userID: {type: String, required: true},
+    path: {type: [String], required: true},
 });
 
 
 // Export the model
-module.exports = mongoose.model('Code', CodeSchema);
+module.exports = mongoose.model('Path', pathSchema);
