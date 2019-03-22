@@ -12,11 +12,15 @@ function makeid(length) {
   }
 
 exports.scrape = function (req, res) {
-    Path.find({userID: req.user.id}, function(err, paths) {
-        if (err) console.log(err);
-        res.json({success: paths})
-        res.render("scraper", {pathCollection: paths});
-    });
+    if(req.user === undefined){
+        res.render("unauthenticated");
+    }
+    else{
+        Path.find({userID: req.user.id}, function(err, paths) {
+            res.render("scraper", {pathCollection: paths});
+        });
+    }
+
 };
 exports.post = function (req, res){
     console.log(req.params.id);
@@ -47,7 +51,7 @@ exports.paths = function (req, res) {
     else{
         Path.find({userID: req.user.id}, function(err, paths) {
             if (err) console.log(err);
-            res.json({success: paths})
+            res.render("paths",{paths: paths})
         });
     }
 }

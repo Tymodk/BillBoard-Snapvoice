@@ -12,10 +12,26 @@ block content
         | Welcome to your dashboard page, #{user.profile.firstName}.  
         br
         if code
-          | Your code is #{code}.
+          | Your code is 
           br
-          | You can use this to post to /scraper/#{code} to save your logs!
+          div(class="tltip")
+            input(type="text" value=code id="code" onclick="copy(this);" onmouseout="outFunc()")
+            span(class="tooltiptext" id="myTooltip")
+              | Copy to clipboard
+          br
+          | You can use the chrome extension and the code to send your paths to this website!
           br 
           a(href="/scraper/paths") All of your paths
         else
           a(href="/scraper/generate") Generate your code
+  script.
+    function copy(element){
+      element.select();
+      document.execCommand("copy");
+      var tooltip = document.getElementById("myTooltip");
+      tooltip.innerHTML = "Copied: " + element.value;
+    }
+    function outFunc() {
+      var tooltip = document.getElementById("myTooltip");
+      tooltip.innerHTML = "Copy to clipboard";
+    }
