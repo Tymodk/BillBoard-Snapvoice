@@ -12,7 +12,11 @@ function makeid(length) {
   }
 
 exports.scrape = function (req, res) {
-  res.render("scraper");
+    Path.find({userID: req.user.id}, function(err, paths) {
+        if (err) console.log(err);
+        res.json({success: paths})
+        res.render("scraper", {pathCollection: paths});
+    });
 };
 exports.post = function (req, res){
     console.log(req.params.id);

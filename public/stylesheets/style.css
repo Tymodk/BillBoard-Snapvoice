@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: url('/images/qbkls.png');
 }
 
 a {
@@ -25,4 +26,9 @@ h2 {
 
 .container {
   padding-top: 2em;
+}
+.jumbotron{
+  background: url('/images/connectwork.png');
+  color: #fff;
+  box-shadow: 7px 7px 29px -10px rgba(0,0,0,0.75);
 }
