@@ -9,3 +9,11 @@ block content
     .offset-sm-2.col-sm-8
       .jumbotron.text-center.
         Welcome to the BillBoard! This is your portal to your peronalized scraping
+
+
+  div(id="particles-js") 
+  script( src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js")
+  script
+    | particlesJS.load('particles-js', '/particles.json', function() {
+    |  console.log('callback - particles-js config loaded');
+    | });

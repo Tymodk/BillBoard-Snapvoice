@@ -22,6 +22,10 @@ exports.scrape = function (req, res) {
     }
 
 };
+exports.python = function (req, res) {
+    res.send('UNDER CONSTRUCTION');
+    // TODO: FLASK SERVER END POINT TO THEN CALL SCRAPER AND RETURN INFO 
+};
 exports.post = function (req, res){
     console.log(req.params.id);
     console.log(req.body);

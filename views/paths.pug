@@ -9,4 +9,6 @@ block content
   .row
     .offset-sm-2.col-sm-8
       .jumbotron.text-center
-        pre(style="color:#FFF; text-align:left;") #{paths}
+        each val in paths
+          pre(style="color:#FFF; text-align:left;") #{val}
+          a(href='/scraper/paths/' + val._id) Use this path!
