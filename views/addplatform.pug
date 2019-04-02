@@ -1,0 +1,25 @@
+extends layout
+
+block variables
+  - var title = "Add item"
+
+block content
+  h2.text-center Manage marketplace
+  .row.ml-5
+    form(action="/marketplace/manage/add", method="POST")
+        input(type="text" name="name" placeholder="name of website")
+        br
+        input(type="text" name="imageurl" placeholder="A url for image")
+        br
+        label Add to marketplace
+        input(type="checkbox" name="isActive")
+        br      
+        input(type="submit" value="Add to DB").btn.btn-success
+ 
+
+
+
+
+
+
+

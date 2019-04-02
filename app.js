@@ -16,6 +16,7 @@ const dashboardRouter = require("./routes/dashboard");
 const publicRouter = require("./routes/public");
 const scraperRouter = require("./routes/scraper");
 const usersRouter = require("./routes/users");
+const marketplaceRouter = require("./routes/marketplace");
 
 var app = express();
 
@@ -91,6 +92,7 @@ app.use('/', publicRouter);
 app.use('/dashboard', loginRequired, dashboardRouter);
 app.use('/scraper', scraperRouter);
 app.use('/users', usersRouter);
+app.use('/marketplace', loginRequired, marketplaceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -19,9 +19,14 @@ html(lang="en")
           a.p-2.text-dark(href="/users/login") Log In / Register
         else
           a.p-2.text-dark(href="/dashboard") Dashboard
-          a.p-2.text-dark(href="/scraper") Scraper
-
+          a.p-2.text-dark(href="/marketplace") Marketplace
+          if admin
+            a.p-2.text-dark(href="/marketplace/manage") Manage
+          a.p-2.text-dark(href="/scraper") DIY
+          
           a.p-2.text-dark(href="/users/logout") Logout
+
+        
     .container
       block content
 
