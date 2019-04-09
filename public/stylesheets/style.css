@@ -1,5 +1,9 @@
 body {
   font-family: "Source Sans Pro",Helvetica,Arial,serif;
+  font-size: 22px;
+  line-height: 1.8;
+  font-weight: 300;
+  color: #2e3e4f;
 }
 
 a {
@@ -137,6 +141,9 @@ h2 {
   padding: 0 25px;
   position: relative;
 
+}
+.section__inner .how{
+  padding: 50px;
 }
 
 #navigation .navigation__logo {
@@ -304,7 +311,73 @@ p.case{
   padding-top: 20px;
 }
 
+.video{
+  text-align:center;
+}
+.leftexplain{
+  max-width: 450px;
+}
+.rightexplain{
+  float: right;
+  clear:both;
+}
+.rightexplain img{
+  height:250px;
+}
+p.strong{
+  font-weight: 700;
+}
+.how{
+  color: #000 !important;
+}
+.hero__slide.how{
+  align-items: stretch !important;
+}
+.list li {
 
+  padding: 25px 0 25px 18px;
+  position: relative;
+  line-height: 1.4;
+
+}
+.list ul {
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+}
+.list {
+
+  margin: -25px 0;
+
+}
+.list li::before, .list li::after {
+
+  content: "";
+  display: block;
+  background: #4c4c4c;
+  position: absolute;
+
+}
+.list li::before {
+
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  left: 0;
+  top: 38px;
+
+}
+.list li::after {
+
+  height: 1px;
+  opacity: 0.1;
+  left: 18px;
+  right: 0;
+  bottom: 0;
+
+}
 
 
 

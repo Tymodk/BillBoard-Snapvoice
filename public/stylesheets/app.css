@@ -2,7 +2,7 @@
   0% {
     transform: translateX(0); }
   100% {
-    transform: translateX(calc(-250px * 14)); } }
+    transform: translateX(calc(-250px * 7)); } }
 
 .slider {
   background: white;
