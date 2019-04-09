@@ -4,16 +4,26 @@ block variables
   - var title = "Home"
 
 block content
-  h2.text-center BillBoard
-  .row
-    .offset-sm-2.col-sm-8
-      .jumbotron.text-center.
-        Welcome to the BillBoard! This is your portal to your peronalized scraping
+  .hero.section
+    .hero__inner
+      .hero__slide(style="background-image: url('/images/trianglify.png'); width: 1903px; position: relative; left: 0px; top: 0px; z-index: -1; opacity: 1;")
+        .section__inner
+          .hero__content
+            h1.heading.size-l.weight-700.spacing-xs Billboard
+            p.paragraph.size-l.spacing-l Welcome to the BillBoard! This is your portal to your peronalized scraping
+  .overlay
+    .section(style="padding-bottom: 40px")
+      .section__inner
+        .showcase
+          p.paragraph.size-l.spacing-l.case A single platform, all your invoices
+
+  
 
 
-  div(id="particles-js") 
-  script( src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js")
-  script
+
+  //div(id="particles-js") 
+  //script( src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js")
+  //script
     | particlesJS.load('particles-js', '/particles.json', function() {
     |  console.log('callback - particles-js config loaded');
     | });

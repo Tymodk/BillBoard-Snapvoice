@@ -9,26 +9,60 @@ html(lang="en")
     link(rel="stylesheet", href="/stylesheets/style.css")
     title BillBoard: #{title}
   body
-    div.top-bar.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow
-      h5.my-0.mr-md-auto.font-weight-normal
-        a(href="/", title="Expresso") Billboard
-      nav.my-2.my-md-0.mr-md-3
-        a.p-2.text-dark(href="/", title="Home") Home
+    #wrapper
+      .wrapper__inner
+        #navigation.section
+          .navigation__inner.section__inner
+            a(href="/").navigation__logo.pt-2
+              img(src="https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png")
+            .navigation__list
+              .navigation__main
+                ul
+                  li
+                    a.p-2.text-dark(href="/", title="Home") Home
 
-        if user == undefined
-          a.p-2.text-dark(href="/users/login") Log In / Register
-        else
-          a.p-2.text-dark(href="/dashboard") Dashboard
-          a.p-2.text-dark(href="/marketplace") Marketplace
-          if admin
-            a.p-2.text-dark(href="/marketplace/manage") Manage
-          a.p-2.text-dark(href="/scraper") DIY
-          
-          a.p-2.text-dark(href="/users/logout") Logout
+                  if user == undefined
+                    li
+                      a.p-2.text-dark(href="/users/login") Log In / Register
+                  else
+                    li 
+                      a.p-2.text-dark(href="/dashboard") Dashboard
+                    li
+                      a.p-2.text-dark(href="/marketplace") Marketplace
+                    if admin
+                      li
+                        a.p-2.text-dark(href="/marketplace/manage") Manage
+                    li
+                      a.p-2.text-dark(href="/scraper") DIY
+                    
+                    li
+                      a.p-2.text-dark(href="/users/logout") Logout
+            
+
+
 
         
-    .container
-      block content
+        //div.top-bar.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow.justify-content-around(style="position:fixed; top:0;left:0; width:100%")
+          div
+            h5.my-0.mr-md-auto.font-weight-normal
+              a(href="/", title="Expresso") Billboard
+          nav.my-2.my-md-0.mr-md-3
+            a.p-2.text-dark(href="/", title="Home") Home
 
-    footer.
-      Built with #[a(href="https://expressjs.com/") Express.js], login powered by #[a(href="https://developer.okta.com/") Okta].
+            if user == undefined
+              a.p-2.text-dark(href="/users/login") Log In / Register
+            else
+              a.p-2.text-dark(href="/dashboard") Dashboard
+              a.p-2.text-dark(href="/marketplace") Marketplace
+              if admin
+                a.p-2.text-dark(href="/marketplace/manage") Manage
+              a.p-2.text-dark(href="/scraper") DIY
+              
+              a.p-2.text-dark(href="/users/logout") Logout
+
+            
+        .main
+          block content
+
+        footer.
+          Built with #[a(href="https://expressjs.com/") Express.js], login powered by #[a(href="https://developer.okta.com/") Okta].
