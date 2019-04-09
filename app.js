@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var sassMiddleware = require('node-sass-middleware')
 var logger = require('morgan');
 var session = require("express-session");
 var okta = require("@okta/okta-sdk-nodejs");
@@ -56,6 +57,14 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(
+  sassMiddleware({
+      src: __dirname + '/public/sass', 
+      dest: __dirname + '/public/stylesheets',
+      prefix:  '/stylesheets',
+      debug: true,         
+  })
+); 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
