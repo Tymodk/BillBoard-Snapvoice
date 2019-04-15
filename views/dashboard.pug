@@ -4,11 +4,12 @@ block variables
   - var title = "Dashboard"
 
 block content
-  h2.text-center Dashboard
+  
 
-  .row
-    .offset-sm-2.col-sm-8
-      .jumbotron.text-center
+  .section
+    .section__inner
+      h2.text-center.pt-5 Dashboard
+      div
         | Welcome to your dashboard page, #{user.profile.firstName}.  
         br
         if code
@@ -24,6 +25,7 @@ block content
           a(href="/scraper/paths") All of your paths
         else
           a(href="/scraper/generate") Generate your code
+  .fixheight(style="margin-top:200px;")
   script.
     function copy(element){
       element.select();

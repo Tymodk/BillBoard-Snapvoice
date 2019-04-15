@@ -4,10 +4,11 @@ block variables
   - var title = "Paths"
 
 block content
-  h2.text-center Paths
+  
 
-  .row
-    .offset-sm-2.col-sm-8
+  .section
+    .section__inner
+      h2.text-center Paths
       .jumbotron.text-center
         each val in paths
           pre(style="color:#FFF; text-align:left;") #{val}
