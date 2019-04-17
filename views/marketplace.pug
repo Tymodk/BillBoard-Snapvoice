@@ -9,54 +9,14 @@ block content
     .section__inner
         h2.pt-5.text-center Marketplace
         .row
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.digitalocean.com/assets/media/logo-a721c4a7.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png")
-                    .card-body
-                        .card-text
-                            h4 Github
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://s.s-bol.com/nl/upload/images/logos/bol-logo-500500.jpg")
-                    .card-body
-                        .card-text
-                            h4 Bol.com
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.ecommercenews.be/wp-content/uploads/2017/02/coolblue.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.digitalocean.com/assets/media/logo-a721c4a7.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.digitalocean.com/assets/media/logo-a721c4a7.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.digitalocean.com/assets/media/logo-a721c4a7.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
-            .col-sm-3
-                .card.mb-5
-                    img.card-img-top(src="https://www.digitalocean.com/assets/media/logo-a721c4a7.png")
-                    .card-body
-                        .card-text
-                            h4 DigitalOcean
+            each platform in platforms
+              .col-sm-3
+                a(href='/marketplace/product/' + platform.name)
+                    .card.mb-5
+                        img.card-img-top(src=platform.image)
+                        .card-body
+                            .card-text
+                                h4 #{platform.name}
             
                         
 

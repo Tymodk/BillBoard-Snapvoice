@@ -17,7 +17,9 @@ exports.makeadmin = function (req, res) {
 exports.index = function (req, res) {
     Admin.findOne({userID: req.user.id}, function(err, admin) {
         if(admin != null){
-            res.render("marketplace", {admin: true});
+            Platform.find({}, function(err, platforms){
+                res.render("marketplace", {admin: true, platforms:platforms});
+            });
         } else {
             res.render("marketplace", {admin: false});
         }
@@ -67,5 +69,20 @@ exports.toDB = function (req, res) {
         }
     });
 }
+
+exports.products = function (req, res){
+    Admin.findOne({userID: req.user.id}, function(err, admin) {
+        if(admin != null){
+            name = req.params.name;
+            Platform.find({name: name}, function(err, platforms){
+                res.render("marketplace", {admin: true, platforms:platforms});
+            });
+            
+        } else {
+            res.redirect('/');            
+        }
+    });
+}
+
 
 
