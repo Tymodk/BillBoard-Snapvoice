@@ -1,23 +1,23 @@
 const express = require("express");
 const Code = require('../models/code.model');
-
+const User = require('../models/user.model');
 const router = express.Router();
 
 // Display the dashboard page
 router.get("/", (req, res) => {
-  Code.findOne({userID: req.user.id}, function (err, foundcode) {
-      if (err) console.log(err);
-      console.log(foundcode);
-      if(foundcode === null){
-        res.render("dashboard", { code: false});
-      } else {
-        res.render("dashboard", { code: foundcode.Code});
-      }
+  User.findOne({_id: req.session.userId}, function (err, user) {  
+    Code.findOne({userID: req.session.userId}, function (err, foundcode) {
+        if (err) console.log(err);
+        console.log(foundcode);
+        if(foundcode === null){
+          res.render("dashboard", { code: false, user:user});
+        } else {
+          res.render("dashboard", { code: foundcode.Code, user:user});
+        }
+    });
   });
 });
-router.get('/test', (req, res) => {
-  res.json({ profile: req.user ? req.user : null });
-});
+
 
 
 module.exports = router;

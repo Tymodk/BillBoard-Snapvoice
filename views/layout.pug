@@ -22,9 +22,11 @@ html(lang="en")
                   li
                     a.p-2.text-dark(href="/", title="Home") Home
 
-                  if user == undefined
+                  if session['userId'] == undefined
                     li
-                      a.p-2.text-dark(href="/users/login") Log In / Register
+                      a.p-2.text-dark(href="/users/login") Log In
+                    li
+                      a.p-2.text-dark(href="/users/register") Register
                   else
                     li 
                       a.p-2.text-dark(href="/dashboard") Dashboard
@@ -64,7 +66,7 @@ html(lang="en")
             
         .main
           block content
-        footer
+        footer(style="margin-top:auto;")
           .footer.section
             .footer__inner.section__inner
               .footer__top
@@ -89,7 +91,7 @@ html(lang="en")
                 .footer__legal
                   ul
                       li
-                        | Built with #[a(href="https://expressjs.com/") Express.js], login powered by #[a(href="https://developer.okta.com/") Okta].
+                        | Built with #[a(href="https://expressjs.com/") Express.js].
                       li
                         | Placeholder
                 .footer__social

@@ -12,11 +12,11 @@ function makeid(length) {
   }
 
 exports.scrape = function (req, res) {
-    if(req.user === undefined){
+    if(!req.session.userId === undefined){
         res.render("unauthenticated");
     }
     else{
-        Path.find({userID: req.user.id}, function(err, paths) {
+        Path.find({userID: req.session.userId}, function(err, paths) {
             res.render("scraper", {pathCollection: paths});
         });
     }
@@ -49,29 +49,29 @@ exports.post = function (req, res){
     });
 };
 exports.paths = function (req, res) {
-    if(req.user === undefined){
+    if(!req.session.userId){
         res.render("unauthenticated");
     }
     else{
-        Path.find({userID: req.user.id}, function(err, paths) {
+        Path.find({userID: req.session.userId}, function(err, paths) {
             if (err) console.log(err);
             res.render("paths",{paths: paths})
         });
     }
 }
 exports.generate = function (req, res) {
-    if(req.user === undefined){
+    if(!req.session.userId){
         res.render("unauthenticated");
     }
     else{
-        Code.findOne({userID: req.user.id}, function (err, foundcode) {
+        Code.findOne({userID: req.session.userId}, function (err, foundcode) {
             if (err) console.log(err);
             console.log(foundcode);
             if(foundcode === null){
                 let gentoken = makeid(8);
                 let code = new Code({
                     Code: gentoken,
-                    userID: req.user.id,
+                    userID: req.session.userId,
                 })
                 code.save(function (err) {
                     if (err) {

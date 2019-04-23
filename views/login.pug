@@ -1,0 +1,22 @@
+extends layout
+
+block variables
+  - var title = "Scraper"
+
+block content
+    .section
+        .section__inner
+            .container
+                .row
+                    .col-sm-9.col-md-7.col-lg-5.mx-auto
+                        .card.card-signin.my-5
+                            .card-body
+                                h5.cart-title.text-center Sign In
+                                form(action="/users/login" method="POST").form-signin
+                                    .form-label-group
+                                        label(for="inputEmail") Email address
+                                        input(type="email" name="email" id="inputEmail" placeholder="Email address" required autofocus).form-control
+                                    .form-label-group
+                                        label(for="inputPassword") Password
+                                        input(type="password" name="password" id="inputPassword" placeholder="Password" required autofocus).form-control   
+                                    button.btn.btn-lg.btn-primary.btn-block.text-uppercase.mt-3(type="submit") Sign in

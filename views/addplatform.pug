@@ -12,9 +12,12 @@ block content
           br
           input(type="text" name="imageurl" placeholder="An url for image").mb-3.pl-2
           br
-          label Add to marketplace
-          input(type="checkbox" name="isActive").ml-1
+          textarea(name="description" placeholder="Description of the platform").mb-3.pl-2
+          br
+          label(for="isActive") Add to marketplace
+          input(type="checkbox" id="isActive" name="isActive").ml-1
           br      
+
           input(type="submit" value="Add to DB").btn.btn-success
 
 

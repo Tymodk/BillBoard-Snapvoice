@@ -4,8 +4,8 @@ var path = require('path');
 var sassMiddleware = require('node-sass-middleware')
 var logger = require('morgan');
 var session = require("express-session");
-var okta = require("@okta/okta-sdk-nodejs");
-var ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
+//var okta = require("@okta/okta-sdk-nodejs");
+//var ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const bodyParser = require('body-parser');
 
 
@@ -29,7 +29,7 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
+/*
 var oktaClient = new okta.Client({
   orgUrl: 'https://dev-535937.okta.com',
   token: '00SL6tm9xCQuRXaFCTEjGwNcMqelFLJ-Y8VDSEH7fQ'
@@ -49,7 +49,7 @@ const oidc = new ExpressOIDC({
       defaultRedirect: "/dashboard"
     }
   }
-});
+});*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -67,11 +67,17 @@ app.use(
 ); 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   secret: 'fqiodfhqpsdfhsdqpuhfqushfusdqfuchsnfuqysdofuqyt',
   resave: true,
   saveUninitialized: false
 }));
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
+/*
 app.use(oidc.router);
 app.use((req, res, next) => {
   if (!req.userinfo) {
@@ -86,9 +92,9 @@ app.use((req, res, next) => {
     }).catch(err => {
       next(err);
     });
-});
+});*/
 function loginRequired(req, res, next) {
-  if (!req.user) {
+  if (!req.session.userId) {
     return res.status(401).render("unauthenticated");
   }
 
