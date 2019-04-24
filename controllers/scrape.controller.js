@@ -1,6 +1,6 @@
 const Code = require('../models/code.model');
 const Path = require('../models/path.model');
-
+const User = require('../models/user.model');
 function makeid(length) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -16,8 +16,16 @@ exports.scrape = function (req, res) {
         res.render("unauthenticated");
     }
     else{
-        Path.find({userID: req.session.userId}, function(err, paths) {
-            res.render("scraper", {pathCollection: paths});
+        User.findOne({_id: req.session.userId}, function (err, user) {  
+            Code.findOne({userID: req.session.userId}, function (err, foundcode) {
+                if (err) console.log(err);
+                console.log(foundcode);
+                if(foundcode === null){
+                  res.render("scraper", { code: false, user:user});
+                } else {
+                  res.render("scraper", { code: foundcode.Code, user:user});
+                }
+            });
         });
     }
 

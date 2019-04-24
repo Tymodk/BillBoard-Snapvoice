@@ -7,22 +7,31 @@ exports.makeadmin = function (req, res) {
 };
 
 exports.index = function (req, res) {
-    User.findOne({_id: req.session.userId}, function(err, admin) {
-        if(admin != null){
-            if(admin.isAdmin){
-                Platform.find({}, function(err, platforms){
-                    res.render("marketplace", {admin: admin, platforms:platforms});
-                });
-            } else {
-                Platform.find({}, function(err, platforms){
-                    res.render("marketplace", {admin: false, platforms:platforms});
-                });
-            }
-        }        
-    });
+    if(req.session.userId){
+        User.findOne({_id: req.session.userId}, function(err, admin) {
+            if(admin != null){
+                if(admin.isAdmin){
+                    Platform.find({}, function(err, platforms){
+                        res.render("marketplace", {admin: admin, platforms:platforms});
+                    });
+                } else {
+                    Platform.find({}, function(err, platforms){
+                        res.render("marketplace", {admin: false, platforms:platforms});
+                    });
+                }
+            }        
+        });
+    } else {
+        Platform.find({}, function(err, platforms){
+            res.render("marketplace", {admin: false, platforms:platforms});
+        });
+    }
 };
 
 exports.manage = function (req, res) {
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
     User.findOne({_id: req.session.userId}, function(err, admin) {
         if(admin != null){
             if(admin.isAdmin){
@@ -34,6 +43,9 @@ exports.manage = function (req, res) {
     });
 };
 exports.add = function (req, res) {
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
     User.findOne({_id: req.session.userId}, function(err, admin) {
         if(admin != null){
             if(admin.isAdmin){
@@ -45,6 +57,9 @@ exports.add = function (req, res) {
     });
 };
 exports.toDB = function (req, res) { 
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
     console.log(req.body);
     User.findOne({_id: req.session.userId}, function(err, admin) {
         var active = false;
@@ -74,18 +89,9 @@ exports.toDB = function (req, res) {
 }
 
 exports.products = function (req, res){
-    User.findOne({_id: req.session.userId}, function(err, admin) {
-        if(admin != null){
-            if(admin.isAdmin){
-                name = req.params.name;
-                Platform.findOne({name: name}, function(err, platform){
-                    res.render("productdetail", {admin: true, platform:platform});
-                });
-                
-            } else {
-                res.redirect('/');            
-            }
-        }
+    name = req.params.name;
+    Platform.findOne({name: name}, function(err, platform){
+        res.render("productdetail", {admin: true, platform:platform});
     });
 }
 

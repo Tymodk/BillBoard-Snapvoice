@@ -4,18 +4,34 @@ block variables
   - var title = "Scraper"
 
 block content
-    h2.pt-5.text-center Scrapeboard
-    if user == undefined
-        .row
-            .offset-sm-2.col-sm-8
-                .jumbotron.text-center
-                    | To get more of this page, please log in.
-    else
-        .row
-            .offset-sm-2.col-sm-8
-                .jumbotron.text-center
-                    | This will be where you can see your saved scrape paths.
-                    br
-                    br
-                    br
-                    a.p-2(href="/scraper/generate", title="Token") Check your token
+  .section
+    .section__inner
+      h2.text-center.pt-5 Do it Yourself
+      div
+        | Welcome to your DIY page, #{user.username}.  
+        br
+        if code
+          | Your code is 
+          br
+          div(class="tltip")
+            input(type="text" value=code id="code" onclick="copy(this);" onmouseout="outFunc()")
+            span(class="tooltiptext" id="myTooltip")
+              | Copy to clipboard
+          br
+          | You can use the chrome extension and the code to send your paths to this website!
+          br 
+          a(href="/scraper/paths") All of your paths
+        else
+          a(href="/scraper/generate") Generate your code
+  .fixheight(style="margin-top:200px;")
+  script.
+    function copy(element){
+      element.select();
+      document.execCommand("copy");
+      var tooltip = document.getElementById("myTooltip");
+      tooltip.innerHTML = "Copied: " + element.value;
+    }
+    function outFunc() {
+      var tooltip = document.getElementById("myTooltip");
+      tooltip.innerHTML = "Copy to clipboard";
+    }

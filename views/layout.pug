@@ -15,12 +15,15 @@ html(lang="en")
         #navigation.section
           .navigation__inner.section__inner
             a(href="/").navigation__logo.pt-2
-              img(src="https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png")
+              img(src="/images/snaplogo.png" alt="logo of snapvoice")
             .navigation__list
               .navigation__main
                 ul
                   li
                     a.p-2.text-dark(href="/", title="Home") Home
+                  li
+                    a.p-2.text-dark(href="/marketplace") Marketplace
+
 
                   if session['userId'] == undefined
                     li
@@ -28,13 +31,12 @@ html(lang="en")
                     li
                       a.p-2.text-dark(href="/users/register") Register
                   else
-                    li 
-                      a.p-2.text-dark(href="/dashboard") Dashboard
-                    li
-                      a.p-2.text-dark(href="/marketplace") Marketplace
                     if admin
                       li
                         a.p-2.text-dark(href="/marketplace/manage") Manage
+                    li 
+                      a.p-2.text-dark(href="/dashboard") Dashboard
+                    
                     li
                       a.p-2.text-dark(href="/scraper") DIY
                     
@@ -91,9 +93,9 @@ html(lang="en")
                 .footer__legal
                   ul
                       li
-                        | Built with #[a(href="https://expressjs.com/") Express.js].
+                        | Copyright © 2019, all rights reserved.
                       li
-                        | Placeholder
+                        | Contact me for work +32 485 52 29 19 or <a href="mailto:tymo.dekock@telenet.be" style="color:white;">tymo.dekock@telenet.be</a>
                 .footer__social
                   ul
                     li
