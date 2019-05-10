@@ -167,6 +167,9 @@ img {
   max-width: 100%;
 
 }
+.section__inner .marketplace form input{
+  width: 50%;
+}
 #navigation .navigation__list {
 
   display: -ms-flexbox;
@@ -439,7 +442,7 @@ p.case{
   text-align:center;
 }
 .leftexplain{
-  max-width: 450px;
+  max-width: 47%;
 }
 .rightexplain{
   float: right;
@@ -552,6 +555,12 @@ p.strong{
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  }
+  .leftexplain{
+    max-width: 100%;
+  }
+  .section__inner .marketplace form input{
+    width: 100%;
   }
 
 }

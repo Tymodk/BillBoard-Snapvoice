@@ -9,9 +9,21 @@ block content
     .section__inner
         h2.pt-5.text-center #{platform.name}
         .marketplace.mt-5.pt-5
-            h3 Add this platform to your collections
+            img.rightexplain.mobhide(src=platform.image style="height:250px;")
+            p.leftexplain(style="height:250px") #{platform.description}
+            if session['userId'] == undefined
+              p.
+                You can easily get your invoices from <strong>#{platform.name}</strong> by #[a(href="/users/register", title="Register") registering] an account or  #[a(href="/users/login", title="Login") logging in]!
 
-            
+            else
+              hr
+              p To add this platform to your dashboard, simply fill in your information for the platform in the following fields:
+              form(action="/marketplace/product/" + platform.name , method="POST")
+                input(type="text" name="username" placeholder="Username for platform" required).mb-3.pl-2
+                br
+                input(type="password" name="password" placeholder="Password for platform" required).mb-3.pl-2
+                br
+                input(type="submit" value="Add this to my dashboard").btn.btn-success
                         
 
 
