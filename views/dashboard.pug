@@ -13,15 +13,18 @@ block content
         | Welcome to your dashboard page, #{user.username}.  
         br
         | You'll find your added products here, manage your information and retrieve your invoices.
-      each connection in connections
-        h3 #{connection.Platform}
-        hr
-        input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
-        input(id=connection.Platform.replace('.','') type="password" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
-        span.input-group-btn(onClick="reveal(\'"+connection.Platform.replace('.','')+"\')")
-          button.btn.btn-default.reveal(type="button" style="height: 42px;margin-bottom: 5px;")
-            i
-              img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
+      if connections == false
+        h4.mt-5(style="margin-bottom:250px;") You have no active connections yet, you can add them to the dashboard at the #[a(href="/marketplace", title="marketplace") marketplace]
+      else 
+        each connection in connections
+          h3 #{connection.Platform}
+          hr
+          input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
+          input(id=connection.Platform.replace('.','') type="password" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
+          span.input-group-btn(onClick="reveal(\'"+connection.Platform.replace('.','')+"\')")
+            button.btn.btn-default.reveal(type="button" style="height: 42px;margin-bottom: 5px;")
+              i
+                img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
         
           
  
