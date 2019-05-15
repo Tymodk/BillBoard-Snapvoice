@@ -13,3 +13,28 @@ block content
         | Welcome to your dashboard page, #{user.username}.  
         br
         | You'll find your added products here, manage your information and retrieve your invoices.
+      each connection in connections
+        h3 #{connection.Platform}
+        hr
+        input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
+        input(id=connection.Platform.replace('.','') type="password" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
+        span.input-group-btn(onClick="reveal(\'"+connection.Platform.replace('.','')+"\')")
+          button.btn.btn-default.reveal(type="button" style="height: 42px;margin-bottom: 5px;")
+            i
+              img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
+        
+          
+ 
+  | <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  script.  
+    function reveal(element){
+      console.log(element); 
+      var $pwd = $('#'+element);
+      console.log($pwd);
+      if ($pwd.attr('type') === 'password') {
+          $pwd.attr('type', 'text');
+      } else {
+          $pwd.attr('type', 'password');
+      }
+    }
+       

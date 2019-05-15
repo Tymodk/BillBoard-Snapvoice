@@ -1,5 +1,6 @@
 const express = require("express");
 const Code = require('../models/code.model');
+const Connection = require('../models/connection.model');
 const User = require('../models/user.model');
 const router = express.Router();
 
@@ -7,13 +8,24 @@ const router = express.Router();
 router.get("/", (req, res) => {
   User.findOne({_id: req.session.userId}, function (err, user) {  
     Code.findOne({userID: req.session.userId}, function (err, foundcode) {
+      Connection.find({userID: req.session.userId}, function (err, fconnections) {      
         if (err) console.log(err);
         console.log(foundcode);
         if(foundcode === null){
-          res.render("dashboard", { code: false, user:user});
+          if(fconnections === null){
+            res.render("dashboard", { code: false, connections:false, user:user});
+          } else {
+            res.render("dashboard", { code: false, connections:fconnections, user:user});
+          }
         } else {
-          res.render("dashboard", { code: foundcode.Code, user:user});
+          if(fconnections === null){
+            res.render("dashboard", { code: foundcode.Code, connections:false, user:user});
+          }else{
+            res.render("dashboard", { code: foundcode.Code, connections:fconnections, user:user});
+
+          }
         }
+      });
     });
   });
 });

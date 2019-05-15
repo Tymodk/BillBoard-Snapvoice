@@ -97,7 +97,20 @@ exports.products = function (req, res){
 
 
 exports.addToDash = function (req, res){
-    name = req.params.name;
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    
+    connectionData = {
+        Platform: req.params.name,
+        PlatformUsername: req.body.username,
+        PlatformPassword: req.body.password,
+        userID: req.session.userId,
+    }
+    Connection.findOneAndUpdate({Platform: req.params.name, userID: req.session.userId}, connectionData, {upsert:true}, function(err, doc){
+        console.log(err);
+        console.log("succesfully saved");
+    });   
     res.redirect('/dashboard');
 }
 
