@@ -25,7 +25,9 @@ block content
             button.btn.btn-default.reveal(type="button" style="height: 42px;margin-bottom: 5px;")
               i
                 img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
-        
+          br
+          button.btn(onClick="scrape(\'"+connection.Platform.replace('.','')+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword +"\')")
+            | Get my invoices
           
  
   | <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -39,5 +41,20 @@ block content
       } else {
           $pwd.attr('type', 'password');
       }
+    }
+    function scrape(platform, username, password){
+      console.log(`http://localhost:5002/${platform.toLowerCase()}scraper/${username}/${password}`);
+    
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+              console.log("ready");
+      }
+      xmlHttp.open("GET", `http://localhost:5002/${platform.toLowerCase()}scraper/${username}/${password}`, true); // true for asynchronous
+      xmlHttp.send(null);
+
+
+        
+
     }
        
