@@ -5,7 +5,6 @@ block variables
 
 block content
   
-
   .section
     .section__inner
       h2.text-center.pt-5 Dashboard
@@ -19,6 +18,7 @@ block content
         each connection in connections
           h3 #{connection.Platform}
           hr
+          
           input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
           input(id=connection.Platform.replace('.','') type="password" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
           span.input-group-btn(onClick="reveal(\'"+connection.Platform.replace('.','')+"\')")
@@ -26,8 +26,17 @@ block content
               i
                 img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
           br
-          button.btn(onClick="scrape(\'"+connection.Platform.replace('.','')+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword +"\')")
+          button.mb-5.btn(onClick="scrape(\'"+connection.Platform+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword + "\', \'"+ user._id +"\')")
             | Get my invoices
+          button.mb-5.ml-3.btn(onclick=`search('${connection.Platform.toLowerCase()}','${user._id}')`)
+            | Refresh
+            
+          table.table.table-bordered(onload="search(\'"+ connection.Platform.toLowerCase()+"\',\'"+ user._id+"\')")
+            thead
+              tr
+                th(scope="col") File             
+                th(scope="col") date             
+            tbody(id=(connection.Platform.replace('.','').toLowerCase() + "table"))
           
  
   | <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -42,19 +51,57 @@ block content
           $pwd.attr('type', 'password');
       }
     }
-    function scrape(platform, username, password){
-      console.log(`http://localhost:5002/${platform.toLowerCase()}scraper/${username}/${password}`);
     
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() {
-          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-              console.log("ready");
-      }
-      xmlHttp.open("GET", `http://localhost:5002/${platform.toLowerCase()}scraper/${username}/${password}`, true); // true for asynchronous
-      xmlHttp.send(null);
-
-
-        
+    const get = (platform, userId, cb) => {
+          
+          var url = '/files/getPdfs?platform='+platform+'&userId='+userId
+          console.log(url)
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.onreadystatechange = function() {
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                  cb(false, JSON.parse(xmlHttp.responseText));
+          }
+          xmlHttp.open("GET", url, false); // true for asynchronous
+          xmlHttp.send()
 
     }
+    function search(platform, userId){
+      console.log(platform);
+      console.log(userId);
+
+          get(platform,userId, function(err, json){
+            if(json.data){
+              let table = '';
+              for (var i = 0; i < json.data.length; i++) {
+                
+                table += `
+                <tr>
+                  <td><a href="${json.data[i].location}" download>${json.data[i].name}</a></td>
+                  <td>${json.data[i].date}</td>
+                     
+
+                </tr>`
+              }
+              console.log(platform.replace('.','')+'table');
+              document.getElementById(platform.replace('.','')+'table').innerHTML = table;
+            }      
+          })
+        }
+
+      function scrape(platform, username, password, userId){
+          var params = {
+            "username": username,
+            "password": password,
+            "userId": userId
+          }
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.onreadystatechange = function() {
+              if (xmlHttp.status == 200){
+                  console.log("Ready")
+              }
+          }
+          xmlHttp.open("POST", `http://localhost:5002/${platform.toLowerCase().replace('.','')}scraper/`, true); // true for asynchronous
+          xmlHttp.send(JSON.stringify(params));
+        }
+
        

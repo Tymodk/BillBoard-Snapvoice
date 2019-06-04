@@ -4,6 +4,7 @@ var path = require('path');
 var sassMiddleware = require('node-sass-middleware')
 var logger = require('morgan');
 var session = require("express-session");
+const fileUpload = require('express-fileupload');
 //var okta = require("@okta/okta-sdk-nodejs");
 //var ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const bodyParser = require('body-parser');
@@ -18,6 +19,7 @@ const publicRouter = require("./routes/public");
 const scraperRouter = require("./routes/scraper");
 const usersRouter = require("./routes/users");
 const marketplaceRouter = require("./routes/marketplace");
+const fileRouter = require("./routes/files")
 
 var app = express();
 
@@ -55,6 +57,7 @@ const oidc = new ExpressOIDC({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(fileUpload());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(
@@ -108,6 +111,7 @@ app.use('/dashboard', loginRequired, dashboardRouter);
 app.use('/scraper', loginRequired, scraperRouter);
 app.use('/users', usersRouter);
 app.use('/marketplace', marketplaceRouter);
+app.use('/files', fileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next){
