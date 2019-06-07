@@ -89,10 +89,18 @@ block content
         }
 
       function scrape(platform, username, password, userId){
+          var key = prompt("Please enter your encryption key", "encryption key")
+          if (key != null) {        
+            
+              keyvar = ''
+              for (let index = 0; index < 32; index++) {
+                keyvar += key[index%key.length];
+            }
           var params = {
             "username": username,
             "password": password,
-            "userId": userId
+            "userId": userId,
+            "key": keyvar
           }
           var xmlHttp = new XMLHttpRequest();
           xmlHttp.onreadystatechange = function() {
@@ -102,6 +110,7 @@ block content
           }
           xmlHttp.open("POST", `http://localhost:5002/${platform.toLowerCase().replace('.','')}scraper/`, true); // true for asynchronous
           xmlHttp.send(JSON.stringify(params));
+          }
         }
 
        

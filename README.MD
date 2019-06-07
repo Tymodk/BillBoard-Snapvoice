@@ -1,10 +1,10 @@
 # Snapvoice data gathering platform for invoices  
 
 TODO  
-- Make 3 more scrapers (Github, ..., ...)
-- Status mongo 
+- Status in mongo steken om dan te reloaden 
 - Mobile friendly top bar
 - CRUD functionality for both ADMIN and USER
+- Make 3 more scrapers (Github, ..., ...)
 - Copywrite
 
 
@@ -15,7 +15,9 @@ Voeg Timothy toe
 zorgt voor connecteren
 eerste cmd -> sudo apt-get update -> sudo apt-get upgrade
 instaleer server 1 -> node & mongo & pm2 server 2 -> python & selenium & node & pm2
-SSH key
+
+pm2 start ./bin/www
+
 
 node process op poort 80
 koop domain name

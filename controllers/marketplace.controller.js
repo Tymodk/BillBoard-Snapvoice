@@ -1,6 +1,7 @@
 const Platform = require('../models/platform.model');
 const User = require('../models/user.model');
 const Connection = require('../models/connection.model');
+const crypto = require('crypto');
 // TEST FUNCTION REMOVE IT OUT OF PRODUCTION 
 exports.makeadmin = function (req, res) {
     //to be fixed
@@ -100,11 +101,23 @@ exports.addToDash = function (req, res){
     if(!req.session.userId){
         res.render("unauthenticated")
     }
-    
+    enckey = req.body.encryptionkey
+    let keyvar = ''
+    for (let index = 0; index < 32; index++) {
+        keyvar += req.body.encryptionkey[index%enckey.length];
+        
+    }
+    console.log(keyvar)
+    var iv = new Buffer('asdfasdfasdfasdf')
+    var key = new Buffer(keyvar)
+    var cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    cipher.update(new Buffer(req.body.password));
+    var enc = cipher.final('base64');
+    console.log(enc)
     connectionData = {
         Platform: req.params.name,
         PlatformUsername: req.body.username,
-        PlatformPassword: req.body.password,
+        PlatformPassword: enc,
         userID: req.session.userId,
     }
     Connection.findOneAndUpdate({Platform: req.params.name, userID: req.session.userId}, connectionData, {upsert:true}, function(err, doc){
