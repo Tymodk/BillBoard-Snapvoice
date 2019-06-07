@@ -96,7 +96,7 @@ block content
           }
           var xmlHttp = new XMLHttpRequest();
           xmlHttp.onreadystatechange = function() {
-              if (xmlHttp.status == 200){
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                   console.log("Ready")
               }
           }
