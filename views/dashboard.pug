@@ -8,7 +8,7 @@ block content
   .section
     .section__inner
       h2.text-center.pt-5 Dashboard
-      div
+      div.mb-5
         | Welcome to your dashboard page, #{user.username}.  
         br
         | You'll find your added products here, manage your information and retrieve your invoices.
@@ -20,11 +20,8 @@ block content
           hr
           
           input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
-          input(id=connection.Platform.replace('.','') type="password" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
-          span.input-group-btn(onClick="reveal(\'"+connection.Platform.replace('.','')+"\')")
-            button.btn.btn-default.reveal(type="button" style="height: 42px;margin-bottom: 5px;")
-              i
-                img(src="/images/eye-solid.png", alt="eye-icon" style="height:20px")
+          input(id=connection.Platform.replace('.','') type="hidden" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
+          
           br
           button.mb-5.btn(onClick="scrape(\'"+connection.Platform+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword + "\', \'"+ user._id +"\')")
             | Get my invoices
@@ -39,7 +36,7 @@ block content
             tbody(id=(connection.Platform.replace('.','').toLowerCase() + "table"))
           
  
-  | <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  
   script.  
     function reveal(element){
       console.log(element); 

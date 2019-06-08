@@ -8,16 +8,47 @@ html(lang="en")
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
     link(rel="stylesheet", href="/stylesheets/style.css")
     link(rel="stylesheet", href="/stylesheets/app.css")
+    | <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     title BillBoard: #{title}
   body
     #wrapper
       .wrapper__inner
+        .navpanel.mobshow
+          .navpanelcontent            
+            ul
+              li
+                a.p-2.text-dark(href="/", title="Home") Home
+              li
+                a.p-2.text-dark(href="/marketplace") Marketplace
+
+
+              if session['userId'] == undefined
+                li
+                  a.p-2.text-dark(href="/users/login") Log In
+                li
+                  a.p-2.text-dark(href="/users/register") Register
+              else
+                if admin
+                  li
+                    a.p-2.text-dark(href="/marketplace/manage") Manage
+                li 
+                  a.p-2.text-dark(href="/dashboard") Dashboard
+                if admin                    
+                  li
+                    a.p-2.text-dark(href="/scraper") DIY
+                
+                li
+                  a.p-2.text-dark(href="/users/logout") Logout
+          
         #navigation.section
           .navigation__inner.section__inner
-            a(href="/").navigation__logo.pt-2
+            .nav-icon.mobshow(onclick="showBar(this)")
+              div
+            
+            a(href="/").navigation__logo.pt-2.mobcenter
               img(src="/images/snaplogo.png" alt="logo of snapvoice")
             .navigation__list
-              .navigation__main
+              .navigation__main.mobhide
                 ul
                   li
                     a.p-2.text-dark(href="/", title="Home") Home
@@ -36,13 +67,15 @@ html(lang="en")
                         a.p-2.text-dark(href="/marketplace/manage") Manage
                     li 
                       a.p-2.text-dark(href="/dashboard") Dashboard
-                    
-                    li
-                      a.p-2.text-dark(href="/scraper") DIY
+                    if admin                    
+                      li
+                        a.p-2.text-dark(href="/scraper") DIY
                     
                     li
                       a.p-2.text-dark(href="/users/logout") Logout
-            
+              
+
+                
 
 
 
@@ -68,6 +101,12 @@ html(lang="en")
             
         .main
           block content
+        script.
+          $(".nav-icon.mobshow").click(function(){
+            $(".nav-icon.mobshow").toggleClass("active");
+            $(".navpanel.mobshow").toggleClass("active");
+          });
+
         footer(style="margin-top:auto;")
           .footer.section
             .footer__inner.section__inner
