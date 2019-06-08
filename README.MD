@@ -2,10 +2,11 @@
 
 TODO  
 - Status in mongo steken om dan te reloaden 
-- Mobile friendly top bar
+
 - CRUD functionality for both ADMIN and USER
 - Make 3 more scrapers (Github, ..., ...)
 - Copywrite
+- Mobile Friendly touchups
 
 
 HOSTING

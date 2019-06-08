@@ -197,7 +197,7 @@ img {
 
 }
 #navigation .navigation__main li {
-
+  margin-left: 5px;
   font-size: 20px;
   line-height: 1.1;
   font-weight: 600;
