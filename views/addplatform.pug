@@ -8,17 +8,17 @@ block content
     .section__inner.pt-5
       h2.text-center Manage marketplace  
       form(action="/marketplace/manage/add", method="POST")
-          input(type="text" name="name" placeholder="Name of website" required).mb-3.pl-2
+          input(type="text" name="name" placeholder="Name of website" style="width: 100%;" required).mb-3.pl-2
           br
-          input(type="text" name="imageurl" placeholder="An url for image" required).mb-3.pl-2
+          input(type="text" name="imageurl" placeholder="An url for image" style="width: 100%;" required).mb-3.pl-2
           br
-          textarea(name="description" placeholder="Description of the platform" required).mb-3.pl-2
+          textarea(name="description" placeholder="Description of the platform" style="width: 100%;" required).mb-3.pl-2
           br
           label(for="isActive") Add to marketplace
           input(type="checkbox" id="isActive" name="isActive").ml-1
           br      
 
-          input(type="submit" value="Add to DB").btn.btn-success
+          input(type="submit" value="Add to DB" style="width: 100%;").btn.btn-success
 
 
 

@@ -2,12 +2,10 @@ const Platform = require('../models/platform.model');
 const User = require('../models/user.model');
 const Connection = require('../models/connection.model');
 const crypto = require('crypto');
-// TEST FUNCTION REMOVE IT OUT OF PRODUCTION 
-exports.makeadmin = function (req, res) {
-    //to be fixed
-};
+
 
 exports.index = function (req, res) {
+    //potential dupecode due to header error otherwise
     if(req.session.userId){
         User.findOne({_id: req.session.userId}, function(err, admin) {
             if(admin != null){
@@ -36,7 +34,10 @@ exports.manage = function (req, res) {
     User.findOne({_id: req.session.userId}, function(err, admin) {
         if(admin != null){
             if(admin.isAdmin){
-                res.render("manage", {admin: admin});
+                Platform.find({}, function(err, platforms){
+                    res.render("manage", {admin: admin, platforms:platforms});
+                });
+
             } else {
                 res.redirect('/');            
             }
@@ -57,6 +58,56 @@ exports.add = function (req, res) {
         }
     });
 };
+exports.edit = function (req, res) {
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    User.findOne({_id: req.session.userId}, function(err, admin) {
+        if(admin != null){
+            if(admin.isAdmin){
+                name = req.params.name;
+                Platform.findOne({name: name}, function(err, platform){
+                    console.log(platform);
+                    res.render("editplatform", {admin: admin,  platform:platform});
+                });
+            } else {
+                res.redirect('/');            
+            }
+        }
+    });
+};
+exports.update = function (req, res) { 
+    platname = req.params.name;
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    console.log(req.body);
+    User.findOne({_id: req.session.userId}, function(err, admin) {
+        var active = false;
+        if (req.body.isActive){
+             active = true;
+        }
+        if(admin != null){
+            if(admin.isAdmin){
+                platData = {
+                    name: req.body.name,
+                    image: req.body.imageurl,
+                    description: req.body.description,
+                    isActive: active,
+                };
+                
+                Platform.findOneAndUpdate({name: platname}, platData, function(err, doc){
+                    if (err) return res.send(500, { error: err });
+                    console.log("succesfully saved");
+                });
+                res.redirect('/marketplace/manage');
+            } else {
+                res.redirect('/');            
+            }
+        }
+    });
+}
+
 exports.toDB = function (req, res) { 
     if(!req.session.userId){
         res.render("unauthenticated")
@@ -92,7 +143,7 @@ exports.products = function (req, res){
     name = req.params.name;
     Platform.findOne({name: name}, function(err, platform){
         console.log(platform);
-        res.render("productdetail", {admin: true, platform:platform});
+        res.render("productdetail", {admin: false, platform:platform});
     });
 }
 

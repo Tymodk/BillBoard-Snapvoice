@@ -10,7 +10,7 @@ block content
         h2.pt-5.text-center #{platform.name}
         .marketplace.mt-5.pt-5
   
-            img.rightexplain.mobhide(src=platform.image style="height:250px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);")
+            img.rightexplain.mobhide(src=platform.image style="height:250px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 15px")
             p.leftexplain(style="height:250px") #{platform.description}
             if session['userId'] == undefined
               p.

@@ -2,6 +2,7 @@ extends layout
 
 block variables
   - var title = "Dashboard"
+  - var disabled = 0
 
 block content
   
@@ -16,25 +17,30 @@ block content
         h4.mt-5(style="margin-bottom:250px;") You have no active connections yet, you can add them to the dashboard at the #[a(href="/marketplace", title="marketplace") marketplace]
       else 
         each connection in connections
-          h3 #{connection.Platform}
-          hr
-          
-          input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
-          input(id=connection.Platform.replace('.','') type="hidden" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
-          
-          br
-          button.mb-5.btn(onClick="scrape(\'"+connection.Platform+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword + "\', \'"+ user._id +"\')")
-            | Get my invoices
-          button.mb-5.ml-3.btn(onclick=`search('${connection.Platform.toLowerCase()}','${user._id}')`)
-            | Refresh
+          if connection != undefined
+            h3 #{connection.Platform}
+            hr
             
-          table.table.table-bordered(onload="search(\'"+ connection.Platform.toLowerCase()+"\',\'"+ user._id+"\')")
-            thead
-              tr
-                th(scope="col") File             
-                th(scope="col") date             
-            tbody(id=(connection.Platform.replace('.','').toLowerCase() + "table"))
-          
+            input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2
+            input(id=connection.Platform.replace('.','') type="hidden" name="password" placeholder="Password for platform" value=connection.PlatformPassword required disabled="disabled").mb-3.pl-2
+            
+            br
+            button.mb-5.btn(onClick="scrape(\'"+connection.Platform+"\', \'"+ connection.PlatformUsername + "\', \'"+ connection.PlatformPassword + "\', \'"+ user._id +"\')")
+              | Get my invoices
+            button.mb-5.ml-3.btn(onclick=`search('${connection.Platform.toLowerCase()}','${user._id}')`)
+              | Refresh
+            p(id=(connection.Platform.replace('.','').toLowerCase() + "error") style="display:none;") No invoices found yet..
+              
+            table.table.table-bordered(onload="search(\'"+ connection.Platform.toLowerCase()+"\',\'"+ user._id+"\')")
+              thead(id=(connection.Platform.replace('.','').toLowerCase() + "top") style="display:none;")
+                tr
+                  th(scope="col" style="width:150px") File             
+                  th(scope="col") Date             
+              tbody(id=(connection.Platform.replace('.','').toLowerCase() + "table"))
+          else                    
+            - disabled = 1
+        if disabled
+          h4 One or more of your connections has been temporarily disabled, have patience.  
  
   
   script.  
@@ -70,16 +76,30 @@ block content
             if(json.data){
               let table = '';
               for (var i = 0; i < json.data.length; i++) {
-                
+                date = new Date(json.data[i].date)
+                datestring = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " - " + date.getHours() + ":" +  date.getMinutes();
                 table += `
-                <tr>
-                  <td><a href="${json.data[i].location}" download>${json.data[i].name}</a></td>
-                  <td>${json.data[i].date}</td>
-                     
-
+                <tr >
+                  <td style="text-align: center;"><a href="${json.data[i].location}" title="${json.data[i].name}"  download><img src="/images/pdficon.png" alt="pdf-icon" style="height: 100px"></a></td>
+                  <td>${datestring}</td>                    
                 </tr>`
               }
               console.log(platform.replace('.','')+'table');
+              x = document.getElementById(platform.replace('.','')+'top');
+              y = document.getElementById(platform.replace('.','')+'error')
+
+              if(json.data.length > 0){
+                if (x.style.display === "none") {
+                    x.style.display = "";
+                    y.style.display = "none"
+                }
+              } else {
+                if (y.style.display === "none") {
+                    y.style.display = "";
+                    x.style.display = "none";
+                }
+              }
+              
               document.getElementById(platform.replace('.','')+'table').innerHTML = table;
             }      
           })

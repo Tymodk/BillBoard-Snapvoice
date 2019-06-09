@@ -94,6 +94,9 @@ h2 {
   object-fit: cover;
 
 }
+.table td, .table th {
+  vertical-align: middle !important;
+}
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {

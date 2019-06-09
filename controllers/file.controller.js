@@ -2,7 +2,6 @@ const Pdf = require('../models/pdf.model');
 const fs = require("fs")
 
 exports.pdfstore = function (req, res) {
-    console.log(req.body);
     for (let index = 0; index < Object.keys(req.files).length; index++) {
 
         const file = req.files[Object.keys(req.files)[index]];
@@ -22,7 +21,6 @@ exports.pdfstore = function (req, res) {
                 location: filepath + file.name, 
             }            
             Pdf.findOneAndUpdate({name: req.body.userId + ' - ' + file.name, userID: req.body.userId}, pdfData, {upsert:true}, function(err, doc){
-                console.log(err);
                 console.log("succesfully saved");
             }); 
           });    

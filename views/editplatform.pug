@@ -1,0 +1,29 @@
+extends layout
+
+block variables
+  - var title = "Add item"
+
+block content
+  .section
+    .section__inner.pt-5
+      h2.text-center Edit #{platform.name}
+      form(action="/marketplace/manage/" + platform.name, method="POST")
+          input(type="text" name="name" value=platform.name placeholder="Name of website" style="width: 100%;" required).mb-3.pl-2
+          br
+          input(type="text" name="imageurl" value=platform.image placeholder="An url for image" style="width: 100%;" required).mb-3.pl-2
+          br
+          textarea(name="description" placeholder="Description of the platform" style="width: 100%;" required).mb-3.pl-2 #{platform.description}
+          br
+          label(for="isActive") Active in marketplace
+          input(type="checkbox" id="isActive" name="isActive").ml-1
+          br      
+
+          input(type="submit" value="Edit" style="width: 100%;").btn.btn-success
+
+
+
+
+
+
+
+

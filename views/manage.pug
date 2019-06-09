@@ -7,9 +7,21 @@ block content
   .section
     .section__inner.pt-5
       h2.text-center Manage marketplace
+      h4 Add Platforms
       a(href="/marketplace/manage/add")
         .btn.btn-success Add platform to marketplace
-    
+      hr
+      h4.mb-4 Edit Platforms
+      .row
+        each platform in platforms
+          .col-sm-3
+            a(href='/marketplace/manage/' + platform.name)
+                .card.mb-5
+                    img.card-img-top(src=platform.image)
+                    .card-body
+                        .card-text
+                            h4 #{platform.name}
+      hr
 
 
 
