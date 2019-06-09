@@ -2,9 +2,8 @@
 
 TODO  
 - Status in mongo steken om dan te reloaden 
-
 - CRUD functionality for both ADMIN and USER
-- Make 3 more scrapers (Github, ..., ...)
+- Make 2 more scrapers (telenet, amazon)
 - Copywrite
 - Mobile Friendly touchups
 
