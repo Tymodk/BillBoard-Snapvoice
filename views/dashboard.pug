@@ -13,6 +13,14 @@ block content
         | Welcome to your dashboard page, #{user.username}.  
         br
         | You'll find your added products here, manage your information and retrieve your invoices.
+      if maintenance != null      
+        div(class="mb-5 pt-4 pl-5 maintenance priority-"+maintenance.priority)
+          div(style="float:left").mr-5
+            img.mobhide(src="/images/coghelp.png" style="height: 85px;")
+          div(style="float:left")
+            p We're sorry!
+            p #{maintenance.message}
+          .cfx
       if connections == false
         h4.mt-5(style="margin-bottom:250px;") You have no active connections yet, you can add them to the dashboard at the #[a(href="/marketplace", title="marketplace") marketplace]
       else 
@@ -40,7 +48,7 @@ block content
           else                    
             - disabled = 1
         if disabled
-          h4 One or more of your connections has been temporarily disabled, have patience.  
+          h4 One or more of your connections have been temporarily disabled, sorry for the inconvenience.  
  
   
   script.  

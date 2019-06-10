@@ -2,7 +2,7 @@ const Platform = require('../models/platform.model');
 const User = require('../models/user.model');
 const Connection = require('../models/connection.model');
 const crypto = require('crypto');
-
+const Maintenance = require('../models/maintenance.model');
 
 exports.index = function (req, res) {
     //potential dupecode due to header error otherwise
@@ -58,6 +58,56 @@ exports.add = function (req, res) {
         }
     });
 };
+exports.maintenance = function (req, res) {
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    User.findOne({_id: req.session.userId}, function(err, admin) {
+        if(admin != null){
+            if(admin.isAdmin){
+                name = req.params.name;
+                Maintenance.findOne({id: '1'}, function(err, maintenance){
+                    console.log(maintenance);
+                    res.render("maintenance", {admin: admin,  maintenance:maintenance});
+                });
+            } else {
+                res.redirect('/');            
+            }
+        }
+    });
+};
+exports.updateMaintenance = function (req, res) { 
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    console.log(req.body);
+    User.findOne({_id: req.session.userId}, function(err, admin) {
+        var active = false;
+        if (req.body.isActive){
+             active = true;
+        }
+        if(admin != null){
+            if(admin.isAdmin){
+                msgData = {
+                    id: 1,
+                    message: req.body.message,
+                    priority: req.body.priority,
+                    date: new Date(),
+                    isActive: active
+                };
+                console.log(msgData);
+                Maintenance.findOneAndUpdate({id: 1}, msgData, {upsert:true}, function(err, doc){
+                    if (err) return res.send(500, { error: err });
+                    console.log("succesfully saved maintenance");
+                });
+                res.redirect('/marketplace/manage');
+            } else {
+                res.redirect('/');            
+            }
+        }
+    });
+}
+
 exports.edit = function (req, res) {
     if(!req.session.userId){
         res.render("unauthenticated")

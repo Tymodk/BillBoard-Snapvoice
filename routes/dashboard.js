@@ -2,6 +2,7 @@ const express = require("express");
 const Connection = require('../models/connection.model');
 const User = require('../models/user.model');
 const Platform =require('../models/platform.model');
+const Maintenance = require('../models/maintenance.model');
 
 const router = express.Router();
 
@@ -36,21 +37,23 @@ function inactivity(fconnections){
 // Display the dashboard page
 router.get("/", (req, res) => {
   User.findOne({_id: req.session.userId}, function (err, user) {  
-    Connection.find({userID: req.session.userId}, async function (err, fconnections) {  
-      console.log(fconnections.length);
-      if(fconnections.length === 0){
-        res.render("dashboard", {connections:false, user:user});
-      } else {
-        let fconnectionsfinal;
-        try {
-          fconnectionsfinal = await inactivity(fconnections);
-        } catch(e){
-          console.log(e);
-        }     
-        if (err) console.log(err);
-        res.render("dashboard", {connections:fconnectionsfinal, user:user});
-      }
-      
+    Maintenance.findOne({id: 1, isActive: true}, function(err, maintenance){
+      Connection.find({userID: req.session.userId}, async function (err, fconnections) {  
+        console.log(fconnections.length);
+        if(fconnections.length === 0){
+          res.render("dashboard", {connections:false, user:user, maintenance:maintenance});
+        } else {
+          let fconnectionsfinal;
+          try {
+            fconnectionsfinal = await inactivity(fconnections);
+          } catch(e){
+            console.log(e);
+          }     
+          if (err) console.log(err);
+          res.render("dashboard", {connections:fconnectionsfinal, user:user, maintenance:maintenance});
+        }
+        
+      });
     });
   });
 });

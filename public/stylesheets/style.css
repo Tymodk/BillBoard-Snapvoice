@@ -451,6 +451,9 @@ p.case{
   float: right;
   clear:both;
 }
+.cfx{
+  clear:both;
+}
 .rightexplain img{
   height:250px;
 }
@@ -511,7 +514,18 @@ p.strong{
 .mobshow{
   display: none ;
 }
-
+.priority-low{
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+.priority-moderate{
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+.priority-high{
+  color: #D8000C;
+  background-color: #FFD2D2;
+}
 
 
 @media only screen and (max-width: 768px) {

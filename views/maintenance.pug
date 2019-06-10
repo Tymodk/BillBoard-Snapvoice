@@ -1,0 +1,33 @@
+extends layout
+
+block variables
+  - var title = "Add item"
+
+block content
+  .section
+    .section__inner.pt-5
+      h2.text-center Edit maintenance message
+      form(action="/marketplace/manage/maintenance", method="POST")          
+          if maintenance != null
+            textarea(name="message" placeholder="Message of the maintenance warning" style="width: 100%;" required).mb-3.pl-2 #{maintenance.message}
+          else 
+            textarea(name="message" placeholder="Message of the maintenance warning" style="width: 100%;" required).mb-3.pl-2
+
+          br
+          select(name="priority")
+            option(value="low") Low
+            option(value="moderate") Moderate
+            option(value="high") High
+          br
+          label(for="isActive") Show to users
+          input(type="checkbox" id="isActive" name="isActive").ml-1
+          br      
+          
+          input(type="submit" value="Edit" style="width: 100%;").btn.btn-success
+
+
+
+
+
+
+
