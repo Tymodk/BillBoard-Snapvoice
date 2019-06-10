@@ -1,7 +1,6 @@
 # Snapvoice data gathering platform for invoices  
 
 ## TODO  
-- List of invoices design  
 - CRUD functionality for both ADMIN and USER  
 - Copywrite  
 - Mobile Friendly touchups  

@@ -19,7 +19,13 @@ block content
           br      
 
           input(type="submit" value="Edit" style="width: 100%;").btn.btn-success
-
+      .delete-button.pb-1.mt-5
+        .confirm Confirm Delete
+        .button-face Delete
+  script. 
+    $(".delete-button").on("click", function(){
+      $(this).toggleClass("activate");
+    })
 
 
 
