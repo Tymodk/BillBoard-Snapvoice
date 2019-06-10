@@ -389,7 +389,7 @@ svg {
 
   margin: 0;
   padding: 0;
-  font-family: "Source Sans Pro",Helvetica,Arial,serif;
+  font-family: "Source Sans Pro","Segoe UI";
   font-weight: 300;
 
 }
@@ -406,7 +406,7 @@ svg {
 }
 .paragraph {
 
-  font-family: "Source Sans Pro",Helvetica,Arial,serif;
+  font-family: "Source Sans Pro","Segoe UI";  
   margin: 0;
   padding: 0;
 
