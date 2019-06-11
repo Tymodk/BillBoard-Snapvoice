@@ -157,6 +157,34 @@ exports.update = function (req, res) {
         }
     });
 }
+exports.delete = function (req, res) { 
+    platname = req.params.name;
+    if(!req.session.userId){
+        res.render("unauthenticated")
+    }
+    console.log(req.body);
+    User.findOne({_id: req.session.userId}, function(err, admin) {
+        var active = false;
+        if (req.body.isActive){
+             active = true;
+        }
+        if(admin != null){
+            if(admin.isAdmin){              
+                Platform.deleteOne({name: platname}, function(err, doc){
+                    if (err) return res.send(500, { error: err });
+                    console.log("succesfully deleted");
+                });
+                Connection.deleteMany({Platform: platname}, function(err, doc){
+                    if (err) return res.send(500, { error: err });
+                    console.log("succesfully deleted connections");
+                });                
+                res.redirect('/marketplace/manage');
+            } else {
+                res.redirect('/');            
+            }
+        }
+    });
+}
 
 exports.toDB = function (req, res) { 
     if(!req.session.userId){
@@ -191,11 +219,32 @@ exports.toDB = function (req, res) {
 
 exports.products = function (req, res){
     name = req.params.name;
-    Platform.findOne({name: name}, function(err, platform){
-        console.log(platform);
-        res.render("productdetail", {admin: false, platform:platform});
-    });
+    if(!req.session.userId){
+        Platform.findOne({name: name}, function(err, platform){
+            res.render("productdetail", {admin: false, platform:platform});
+        });
+    } else{
+        Platform.findOne({name: name}, function(err, platform){
+            Connection.findOne({userID: req.session.userId, Platform: name}, function(err, connection){
+                console.log(connection)
+                res.render("productdetail", {admin: false, platform:platform, details:connection});            
+            });
+        });
+    }
 }
+exports.deleteConnection = function (req, res){
+    name = req.params.name;
+    if(!req.session.userId){
+        Platform.findOne({name: name}, function(err, platform){
+            res.render("productdetail", {admin: false, platform:platform});
+        });
+    } else{
+        Connection.deleteOne({userID: req.session.userId, Platform: name}, function(err, doc){
+            res.redirect("/marketplace/product/" + name);            
+        });
+    }
+}
+
 
 
 exports.addToDash = function (req, res){

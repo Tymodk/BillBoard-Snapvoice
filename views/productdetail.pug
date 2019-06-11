@@ -1,7 +1,7 @@
 extends layout
 
 block variables
-  - var title = "Marketplace"
+  - var title = platform.name
 
 block content
   
@@ -19,8 +19,11 @@ block content
             else
               hr
               p To add this platform to your dashboard, simply fill in your information for the platform in the following fields:
-              form(action="/marketplace/product/" + platform.name , method="POST")
-                input(type="text" name="username" placeholder="Username for platform" required).mb-3.pl-2
+              form(action="/marketplace/product/" + platform.name , method="POST")  
+                if details != undefined
+                  input(type="text" name="username" value=details.PlatformUsername placeholder="Username for platform" required).mb-3.pl-2
+                else
+                  input(type="text" name="username" placeholder="Username for platform" required).mb-3.pl-2
                 br
                 input(type="password" name="password" placeholder="Password for platform" required).mb-3.pl-2
                 br
@@ -29,6 +32,16 @@ block content
                 input(type="password" name="encryptionkey" placeholder="Encryption key" required).mb-3.pl-2
                 br
                 input(type="submit" value="Add this to my dashboard").btn.btn-success
+              if details != undefined
+                form(id="deleteform" action="/marketplace/product/delete/"+platform.name, method="POST")
+                  .delete-button.pb-1.mt-5(style="max-width:50%;")
+                    .confirm(onclick='document.getElementById("deleteform").submit();') Confirm Delete
+                    .button-face Delete this connection
+  script. 
+    $(".delete-button").on("click", function(){
+      $(this).toggleClass("activate");
+    })
+
                         
 
 

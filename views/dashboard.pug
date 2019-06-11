@@ -27,6 +27,7 @@ block content
         each connection in connections
           if connection != undefined
             h3 #{connection.Platform}
+              a.ml-1(href="/marketplace/product/" + connection.Platform style="font-size:12px;") edit
             hr
             
             input(type="text" name="username" placeholder="Username for platform" value=connection.PlatformUsername required disabled="disabled").mb-3.pl-2.mr-2

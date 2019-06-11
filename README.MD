@@ -1,7 +1,6 @@
 # Snapvoice data gathering platform for invoices  
 
 ## TODO  
-- CRUD functionality for both ADMIN and USER  
 - Copywrite  
 - Mobile Friendly touchups  
 - (OPTIONAL) Status in mongo steken om dan te reloaden  
