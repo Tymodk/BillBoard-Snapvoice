@@ -134,7 +134,8 @@ block content
                   console.log("Ready")
               }
           }
-          xmlHttp.open("POST", `http://localhost:5002/${platform.toLowerCase().replace('.','')}scraper/`, true); // true for asynchronous
+          xmlHttp.open("POST", `/scraper/callscraper/${platform.toLowerCase().replace('.','')}`, true); // true for asynchronous
+          xmlHttp.setRequestHeader('Content-type', 'application/json')
           xmlHttp.send(JSON.stringify(params));
           }
         }

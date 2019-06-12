@@ -21,6 +21,7 @@
     "node-sass": "^4.11.0",
     "node-sass-middleware": "^0.11.0",
     "particle.js": "^1.0.7",
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "xmlhttprequest": "^1.8.0"
   }
 }
