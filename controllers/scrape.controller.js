@@ -1,6 +1,7 @@
 const Code = require('../models/code.model');
 const Path = require('../models/path.model');
 const User = require('../models/user.model');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 function makeid(length) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -92,4 +93,24 @@ exports.generate = function (req, res) {
             }
         });
     }
+}
+
+exports.callScraper = function (req, res){
+    console.log(req.body);  
+    var params = {
+        "username": req.body.username,
+        "password": req.body.password,
+        "userId": req.body.userId,
+        "key": req.body.keyvar
+      }
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+              console.log("Ready")
+          }
+      }
+      xmlHttp.open("POST", `http://localhost:5002/${req.params.platform.toLowerCase().replace('.','')}scraper/`, true); // true for asynchronous
+      xmlHttp.setRequestHeader('Content-type', 'application/json')
+      xmlHttp.send(JSON.stringify(params));
+      res.json({'status':'finished'});    
 }
