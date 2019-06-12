@@ -101,8 +101,9 @@ exports.callScraper = function (req, res){
         "username": req.body.username,
         "password": req.body.password,
         "userId": req.body.userId,
-        "key": req.body.keyvar
+        "key": req.body.key
       }
+
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() {
           if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
