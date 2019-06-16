@@ -56,11 +56,13 @@ router.post("/register",(req, res) => {
     }
     exists = false;
     User.findOne({email: req.body.email}, function(err, user){
-      console.log('***');
-      console.log(user);
-      console.log('***');
       if(user != null){
         return res.render('register',  { err: 'E-mail already taken'});
+      }
+    });
+    User.findOne({username: req.body.username}, function(err, user){
+      if(user != null){
+        return res.render('register',  { err: 'Username has already been taken'});
       }
     });
     //use schema.create to insert data into the db
