@@ -96,7 +96,6 @@ exports.generate = function (req, res) {
 }
 
 exports.callScraper = function (req, res){
-    console.log(req.body);  
     var params = {
         "username": req.body.username,
         "password": req.body.password,

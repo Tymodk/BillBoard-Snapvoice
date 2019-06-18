@@ -39,6 +39,8 @@ block content
             button.mb-5.ml-3.btn(onclick=`search('${connection.Platform.toLowerCase()}','${user._id}')`)
               | Refresh
             p(id=(connection.Platform.replace('.','').toLowerCase() + "error") style="display:none;") No invoices found yet..
+            p(id=(connection.Platform.replace('.','').toLowerCase() + "erroronscrape") class="maintenance priority-high" style="display:none;").p-3
+
               
             table.table.table-bordered(onload="search(\'"+ connection.Platform.toLowerCase()+"\',\'"+ user._id+"\')")
               thead(id=(connection.Platform.replace('.','').toLowerCase() + "top") style="display:none;")
@@ -73,14 +75,16 @@ block content
               if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                   cb(false, JSON.parse(xmlHttp.responseText));
           }
-          xmlHttp.open("GET", url, false); // true for asynchronous
+          xmlHttp.open("GET", url, true); // true for asynchronous
           xmlHttp.send()
 
     }
     function search(platform, userId){
       console.log(platform);
       console.log(userId);
-
+          if(platform=='bolcom'){
+            platform = 'bol.com';
+          }
           get(platform,userId, function(err, json){
             if(json.data){
               let table = '';
@@ -113,7 +117,39 @@ block content
             }      
           })
         }
-
+      
+      function check(userId, platform){
+        var params = {
+            "userId": userId,
+            "platform": platform
+        }
+        var myinterval = setInterval(function(){
+          var xmlHttp2 = new XMLHttpRequest();
+          xmlHttp2.onreadystatechange = function() {
+              if (xmlHttp2.readyState == 4 && xmlHttp2.status == 200){
+                  json =xmlHttp2.responseText.replace('{"status":"', '').replace('"}', '');
+                  console.log(json);
+                  if(json != 'pending'){
+                    clearInterval(myinterval);
+                    if(json == 'Error'){
+                      y = document.getElementById(platform.replace('.','')+'erroronscrape');
+                      y.innerHTML = "An error occured check if you entered the right key or the correct info.";
+                      y.style.display = "";
+                    } else {
+                       y = document.getElementById(platform.replace('.','')+'erroronscrape');
+                       y.style.display = "none";
+                    }
+                    search(platform, userId)
+                    
+                  }
+              }
+          }
+          xmlHttp2.open("POST", `/status/getStatus/`, true); // true for asynchronous
+          xmlHttp2.setRequestHeader('Content-type', 'application/json')
+          xmlHttp2.send(JSON.stringify(params));
+        }, 10000)     
+      }
+      
       function scrape(platform, username, password, userId){
           var key = prompt("Please enter your encryption key", "encryption key")
           if (key != null) {        
@@ -126,7 +162,8 @@ block content
             "username": username,
             "password": password,
             "userId": userId,
-            "key": keyvar
+            "key": keyvar,
+            "status": "pending"
           }
           var xmlHttp = new XMLHttpRequest();
           xmlHttp.onreadystatechange = function() {
@@ -137,6 +174,16 @@ block content
           xmlHttp.open("POST", `/scraper/callscraper/${platform.toLowerCase().replace('.','')}`, true); // true for asynchronous
           xmlHttp.setRequestHeader('Content-type', 'application/json')
           xmlHttp.send(JSON.stringify(params));
+          var xmlHttp2 = new XMLHttpRequest();
+          xmlHttp2.onreadystatechange = function() {
+              if (xmlHttp2.readyState == 4 && xmlHttp2.status == 200){
+                  console.log("Status created")
+                  check(userId, platform.toLowerCase().replace('.',''));
+              }
+          }
+          xmlHttp2.open("POST", `/status/updateStatus/${platform.toLowerCase().replace('.','')}`, true); // true for asynchronous
+          xmlHttp2.setRequestHeader('Content-type', 'application/json')
+          xmlHttp2.send(JSON.stringify(params));
           }
         }
 
