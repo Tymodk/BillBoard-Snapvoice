@@ -38,6 +38,9 @@ block content
               | Get my invoices
             button.mb-5.ml-3.btn(onclick=`search('${connection.Platform.toLowerCase()}','${user._id}')`)
               | Refresh
+            br
+            div(style="text-align: center;")
+              img(id=(connection.Platform.replace('.','').toLowerCase() + "loading") src="/images/gear.gif" alt="loading gear" style="display:none")
             p(id=(connection.Platform.replace('.','').toLowerCase() + "error") style="display:none;") No invoices found yet..
             p(id=(connection.Platform.replace('.','').toLowerCase() + "erroronscrape") class="maintenance priority-high" style="display:none;").p-3
 
@@ -119,6 +122,7 @@ block content
         }
       
       function check(userId, platform){
+        document.getElementById(platform.replace('.','')+'loading').style.display = "";
         var params = {
             "userId": userId,
             "platform": platform
@@ -131,6 +135,7 @@ block content
                   console.log(json);
                   if(json != 'pending'){
                     clearInterval(myinterval);
+                    document.getElementById(platform.replace('.','')+'loading').style.display = "none";
                     if(json == 'Error'){
                       y = document.getElementById(platform.replace('.','')+'erroronscrape');
                       y.innerHTML = "An error occured check if you entered the right key or the correct info.";
